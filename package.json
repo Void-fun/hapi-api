@@ -1,0 +1,26 @@
+{
+  "name": "hapi-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@hapi/boom": "^10.0.0",
+    "@hapi/hapi": "^20.2.2",
+    "@hapi/inert": "^7.0.0",
+    "delay": "^5.0.0",
+    "filepaths": "^0.3.0",
+    "hapi-boom-decorators": "^4.1.2",
+    "html-to-text": "^8.2.1",
+    "iconv-lite": "^0.6.3",
+    "needle": "^3.1.0",
+    "pdfkit": "^0.13.0",
+    "request": "^2.88.2",
+    "request-promise": "^4.2.6"
+  }
+}
