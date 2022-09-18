@@ -1,5 +1,4 @@
 const {options, handler} = require("@hapi/hapi/lib/cors");
-const request = require("request");
 const rp = require("request-promise");
 const pdfkitDoc= require("pdfkit")
 const fs = require("fs")
@@ -76,10 +75,7 @@ async function openFile(searchParams, urls){
         };
         let result = await rp(opt, async function (err, res, body) {
             if (!err && res.statusCode === 200) {
-                console.log(key.toString());
-                console.log(res.statusCode);
                 let text = await writeWords(key.toString(), body, doc)
-                //console.log(text);
                 urls.push(key.toString());
             }
         });
@@ -90,8 +86,6 @@ async function openFile(searchParams, urls){
 }
 
 async function search(req) {
-    // content-type будет автоматически генерироваться в зависимости оттого какой тип данных  в ответе
-    // тут будет вместо json-а возвращасться pdf
     const searchParams = new URLSearchParams(req.url.search);
     let urls = []
 
@@ -99,17 +93,16 @@ async function search(req) {
 }
 
 module.exports = {
-    method: 'GET', // Метод
-    path: '/search', // Путь
+    method: 'GET',
+    path: '/search',
     handler: async function (req, h) {
         await search(req);
         let filePath = Path.join(__dirname + '\\..\\..\\' + 'output.pdf');
-        console.log(filePath)
+
+        //без этой функции файл возвращался битый
         await delay(10);
+
         return h.file(filePath);
     },
-    // handler:{
-    //     file: 'output.pdf'
-    // }
 };
 

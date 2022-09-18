@@ -9,7 +9,6 @@ const Path = require('path');
 const config = require('../config');
 
 async function createServer() {
-    // Инициализируем сервер
     const server = await new Hapi.server({
         port: 5000,
         host: 'localhost',
@@ -20,26 +19,22 @@ async function createServer() {
         }
     });
 
-    // Регистрируем расширение
     await server.register([
         hapiBoomDecorators,
         hapiInert
     ]);
 
-    // Загружаем все руты из папки ./src/routes/
     let routes = filepaths.getSync(__dirname + '\\routes\\');
     for(let route of routes)
         server.route( require(route.substr(2)) );
 
-    // Запускаем сервер
     try {
         await server.start();
         console.log(`Server running at: ${server.info.uri}`);
-    } catch(err) { // если не смогли стартовать, выводим ошибку
+    } catch(err) {
         console.log(JSON.stringify(err));
     }
 
-    // Функция должна возвращать созданый сервер
     return server;
 }
 
